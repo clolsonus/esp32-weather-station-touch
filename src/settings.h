@@ -11,15 +11,15 @@ const char *SSID = "yourssid";
 const char *WIFI_PWD = "yourpassw0rd";
 
 // timezone Europe/Zurich as per https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
-#define TIMEZONE "CET-1CEST,M3.5.0,M10.5.0/3"
+#define TIMEZONE "CST6CDT,M3.2.0,M11.1.0"
 
 #define UPDATE_INTERVAL_MINUTES 10
 
 // uncomment to get "08/23/2022 02:55:02 pm" instead of "23.08.2022 14:55:02"
-// #define DATE_TIME_FORMAT_US
+#define DATE_TIME_FORMAT_US
 
 // values in metric or imperial system?
-bool IS_METRIC = true;
+bool IS_METRIC = false;
 
 // OpenWeatherMap Settings
 // Sign up here to get an API key: https://docs.thingpulse.com/how-tos/openweathermap-key/
@@ -31,8 +31,10 @@ result set and select the entry closest to the actual location you want to displ
 data for. It'll be a URL like https://openweathermap.org/city/2657896. The number
 at the end is what you assign to the constant below.
  */
-const String OPEN_WEATHER_MAP_LOCATION_ID = "2657896";
-const String DISPLAYED_LOCATION_NAME = "Zurich";
+const String OPEN_WEATHER_MAP_LOCATION_ID = "5025861";
+const String DISPLAYED_LOCATION_NAME = "Esko";
+// const String OPEN_WEATHER_MAP_LOCATION_ID = "5029952";
+// const String DISPLAYED_LOCATION_NAME = "Duluth"; // Hermantown technically
 //String OPEN_WEATHER_MAP_LOCATION_ID = "3833367";
 //String DISPLAYED_LOCATION_NAME = "Ushuaia";
 //String OPEN_WEATHER_MAP_LOCATION_ID = "2147714";
@@ -99,7 +101,8 @@ const uint8_t NUMBER_OF_MOON_IMAGES = 32;
 #ifdef DATE_TIME_FORMAT_US
   int timePosX = 29;
   #define UI_DATE_FORMAT "%m/%d/%Y"
-  #define UI_TIME_FORMAT "%I:%M:%S %P"
+  // #define UI_TIME_FORMAT "%I:%M:%S %P"
+  #define UI_TIME_FORMAT "%l:%M %P"
   #define UI_TIME_FORMAT_NO_SECONDS "%I:%M %P"
   #define UI_TIMESTAMP_FORMAT (UI_DATE_FORMAT + " " + UI_TIME_FORMAT)
 #else

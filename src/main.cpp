@@ -170,8 +170,13 @@ void drawCurrentWeather() {
 
   // temperature incl. symbol, slightly shifted to the right to find better balance due to the ° symbol
   ofr.setFontSize(48);
-  text = String(currentWeather.temp, 1) + "°";
-  ofr.cdrawString(text.c_str(), centerWidth + 10, 120);
+  if ( IS_METRIC ) {
+    text = String(currentWeather.temp, 1) + "°";
+    ofr.cdrawString(text.c_str(), centerWidth + 10, 120);
+  } else {
+    text = String(currentWeather.temp, 0) + "°";
+    ofr.cdrawString(text.c_str(), centerWidth + 5, 120);
+  }
 
   ofr.setFontSize(18);
 
@@ -235,18 +240,20 @@ void drawTimeAndDate() {
   timeSprite.fillSprite(TFT_BLACK);
   ofr.setDrawer(timeSprite);
 
+  String text = "";
+
   // Date
   ofr.setFontSize(16);
-  ofr.cdrawString(
-    String(WEEKDAYS[getCurrentWeekday()] + ", " + getCurrentTimestamp(UI_DATE_FORMAT)).c_str(),
-    centerWidth,
-    10
-  );
+  text = String(DISPLAYED_LOCATION_NAME) + " - " + WEEKDAYS[getCurrentWeekday()] + ", " + getCurrentTimestamp(UI_DATE_FORMAT);
+  ofr.cdrawString( text.c_str(), centerWidth, 10 );
 
   // Time
   ofr.setFontSize(48);
   // centering that string would look optically odd for 12h times -> manage pos manually
-  ofr.drawString(getCurrentTimestamp(UI_TIME_FORMAT).c_str(), timePosX, 25);
+  // ofr.drawString(getCurrentTimestamp(UI_TIME_FORMAT).c_str(), timePosX, 25);
+  text = getCurrentTimestamp(UI_TIME_FORMAT);
+  text.trim();
+  ofr.cdrawString(text.c_str(), centerWidth, 25);
   timeSprite.pushSprite(timeSpritePos.x, timeSpritePos.y);
 
   // set the drawer back since we temporarily changed it to the time sprite above
