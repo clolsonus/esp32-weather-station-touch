@@ -171,10 +171,13 @@ void drawCurrentWeather() {
   // temperature incl. symbol, slightly shifted to the right to find better balance due to the ° symbol
   ofr.setFontSize(48);
   if ( IS_METRIC ) {
-    text = String(currentWeather.temp, 1) + "°";
+    float temp = roundf(currentWeather.temp * 10) / 10;
+    text = String(temp, 1) + "°";
     ofr.cdrawString(text.c_str(), centerWidth + 10, 120);
   } else {
-    text = String(currentWeather.temp, 0) + "°";
+    log_i("current temp: %.1f", currentWeather.temp);
+    float temp = roundf(currentWeather.temp);
+    text = String(temp, 0) + "°";
     ofr.cdrawString(text.c_str(), centerWidth + 5, 120);
   }
 
@@ -215,7 +218,9 @@ void drawForecast() {
     ofr.setFontSize(24);
     ofr.cdrawString(WEEKDAYS_ABBR[dayForecasts[i].day].c_str(), x, 235);
     ofr.setFontSize(18);
-    ofr.cdrawString(String(String(dayForecasts[i].minTemp, 0) + "-" + String(dayForecasts[i].maxTemp, 0) + "°").c_str(), x, 265);
+    float min = roundf(dayForecasts[i].minTemp);
+    float max = roundf(dayForecasts[i].maxTemp);
+    ofr.cdrawString(String(String(min, 0) + "-" + String(max, 0) + "°").c_str(), x, 265);
     ui.drawBmp("/weather-small/" + getWeatherIconName(dayForecasts[i].conditionCode, false) + ".bmp", x - 25, 295);
   }
 }
